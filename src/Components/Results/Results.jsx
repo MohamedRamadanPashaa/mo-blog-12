@@ -1,5 +1,3 @@
-"use client";
-
 import ResultsTable from "./ResultsTable";
 
 const Results = ({ grade, results }) => {

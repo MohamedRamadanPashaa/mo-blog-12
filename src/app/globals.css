@@ -38,6 +38,7 @@ ul {
 }
 
 table {
+  max-width: 100%;
 }
 
 table th {
