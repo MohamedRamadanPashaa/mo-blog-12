@@ -1,45 +1,41 @@
 "use client";
 
+import { isEmail, isPast, minLength } from "@/helpers/validators";
 import { useState } from "react";
+
+const formValidators = { name: minLength, email: isEmail, birthdate: isPast };
 
 const SignUp = () => {
   // name email birthdate password passwordConfirm
-
-  const [name, setName] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
+  const [formState, setFormState] = useState({
+    name: { value: "", isValid: false, touched: false },
+    email: { value: "", isValid: false, touched: false },
+    birthdate: { value: "", isValid: false, touched: false },
   });
 
-  const [email, setEmail] = useState({
-    value: "",
-    isValid: false,
-    touched: false,
-  });
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
 
-  const handleNameChange = (e) => {
-    setName((prev) => ({
+    setFormState((prev) => ({
       ...prev,
-      value: e.target.value,
-      isValid: e.target.value.trim().length >= 3, // true or false
+      [name]: {
+        ...prev[name],
+        value,
+        isValid: formValidators[name](value, 3),
+      },
     }));
   };
 
-  const handleEmailChange = (e) => {
-    setEmail((prev) => ({
+  const handleInputTouch = (e) => {
+    const { name } = e.target;
+
+    setFormState((prev) => ({
       ...prev,
-      value: e.target.value,
-      isValid: e.target.value.includes("@"), // true or false
+      [name]: { ...prev[name], touched: true },
     }));
   };
 
-  const handleNameTouched = () => {
-    setName((prev) => ({ ...prev, touched: true }));
-  };
-
-  const handleEmailTouched = () => {
-    setEmail((prev) => ({ ...prev, touched: true }));
-  };
+  // console.log(formState);
 
   return (
     <form>
@@ -51,12 +47,12 @@ const SignUp = () => {
           id="name"
           name="name"
           placeholder="Write your full name"
-          value={name.value}
-          onChange={handleNameChange}
-          onBlur={handleNameTouched}
+          value={formState.name.value}
+          onChange={handleInputChange}
+          onBlur={handleInputTouch}
         />
         <p>
-          {!name.isValid && name.touched
+          {!formState.name.isValid && formState.name.touched
             ? "Name should be at least 3 chars"
             : ""}
         </p>
@@ -69,13 +65,30 @@ const SignUp = () => {
           id="email"
           name="email"
           placeholder="Write your email"
-          value={email.value}
-          onChange={handleEmailChange}
-          onBlur={handleEmailTouched}
+          value={formState.email.value}
+          onChange={handleInputChange}
+          onBlur={handleInputTouch}
         />
         <p>
-          {!email.isValid && email.touched
+          {!formState.email.isValid && formState.email.touched
             ? "Please provide a valid email"
+            : ""}
+        </p>
+      </div>
+
+      <div>
+        <label htmlFor="birthdate">Birthdate</label>
+        <input
+          type="date"
+          id="birthdate"
+          name="birthdate"
+          value={formState.birthdate.value}
+          onChange={handleInputChange}
+          onBlur={handleInputTouch}
+        />
+        <p>
+          {!formState.birthdate.isValid && formState.birthdate.touched
+            ? "Please provide a valid birthdate"
             : ""}
         </p>
       </div>
