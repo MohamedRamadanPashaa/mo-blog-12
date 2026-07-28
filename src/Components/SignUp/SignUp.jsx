@@ -6,6 +6,13 @@ import Input from "../UiElements/Input";
 import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
 
+/*
+    - Create login page with email and password
+    - Add link in the header to navigate to sign up and login pages 
+    - Add button to login or sign up using gmail
+    - style the sign up and login pages 
+*/
+
 const formValidators = {
   name: minLength,
   email: isEmail,
