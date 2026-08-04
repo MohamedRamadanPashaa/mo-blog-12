@@ -39,6 +39,11 @@
   color: var(--color-one);
 }
 
+.success {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
 .outline:hover {
   opacity: 1;
   background-color: var(--color-one);

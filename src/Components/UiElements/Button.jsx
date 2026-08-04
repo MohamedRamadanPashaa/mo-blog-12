@@ -6,11 +6,12 @@ export default function Button({
   onClick,
   danger,
   outline,
+  success,
   href,
   className,
   disabled,
 }) {
-  const classN = `${classes["button"]} ${danger ? classes["danger"] : ""} ${outline ? classes["outline"] : ""} ${className}`;
+  const classN = `${classes["button"]} ${danger ? classes["danger"] : ""} ${outline ? classes["outline"] : ""} ${success ? classes["success"] : ""} ${className}`;
 
   if (href)
     return (
