@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Button from "../UiElements/Button";
+import { handleTime } from "@/helpers/handleTime";
 
 export default function StopWatch() {
   const [time, setTime] = useState(0);
@@ -47,15 +48,7 @@ export default function StopWatch() {
     return () => clearInterval(interval);
   }, [isRunning, startTime, elapsedTime]);
 
-  const minutes = Math.floor(time / 60000)
-    .toString()
-    .padStart(2, "0"); // 1.75
-  const seconds = Math.floor((time % 60000) / 1000)
-    .toString()
-    .padStart(2, "0"); // 24.25
-  const mill = Math.floor((time % 1000) / 10)
-    .toString()
-    .padStart(2, "0");
+  const { minutes, seconds, mill } = handleTime(time);
 
   return (
     <div>
