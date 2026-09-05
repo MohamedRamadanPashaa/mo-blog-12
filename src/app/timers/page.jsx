@@ -11,7 +11,7 @@ export default function TimersPage() {
     <div>
       <StopWatch />
 
-      <Countdown duration={5_000} />
+      <Countdown duration={5_000} control />
     </div>
   );
 }

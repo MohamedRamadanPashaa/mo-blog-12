@@ -5,7 +5,7 @@
 }
 
 :root {
-  --white: #ffffff;
+  --white: #fff;
   --black: #171717;
   --color-one: #233142;
   --color-two: #455d7a;
@@ -14,6 +14,14 @@
   --red: #f95959;
   --green: #28a745;
   --transition: 300ms;
+}
+
+.dark {
+  --white: #171717;
+  --black: #fff;
+  --color-one: #e3e3e3;
+  --color-two: #a08d8d;
+  --color-three: #222;
 }
 
 a {

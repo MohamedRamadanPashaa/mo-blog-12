@@ -4,10 +4,12 @@ import { handleTime } from "@/helpers/handleTime";
 import { useEffect, useState } from "react";
 import Button from "../UiElements/Button";
 
-export default function Countdown({ duration = 20_000 }) {
+const now = Date.now();
+
+export default function Countdown({ duration = 20_000, running, control }) {
   const [timeLeft, setTimeLeft] = useState(duration);
-  const [endTime, setEndTime] = useState(null);
-  const [isRunning, setIsRunning] = useState(false);
+  const [endTime, setEndTime] = useState(running ? now + duration : null);
+  const [isRunning, setIsRunning] = useState(running);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -55,18 +57,20 @@ export default function Countdown({ duration = 20_000 }) {
         {minutes}:{seconds}.{mill}
       </p>
 
-      <div>
-        <Button success onClick={start}>
-          Start
-        </Button>
-        <Button outline onClick={resume}>
-          Resume
-        </Button>
-        <Button danger onClick={pause}>
-          Pause
-        </Button>
-        <Button onClick={reset}>Reset</Button>
-      </div>
+      {control && (
+        <div>
+          <Button success onClick={start}>
+            Start
+          </Button>
+          <Button outline onClick={resume}>
+            Resume
+          </Button>
+          <Button danger onClick={pause}>
+            Pause
+          </Button>
+          <Button onClick={reset}>Reset</Button>
+        </div>
+      )}
     </div>
   );
 }
