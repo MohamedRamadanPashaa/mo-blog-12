@@ -68,8 +68,9 @@
   background-color: transparent;
   color: var(--color-three);
   border: none;
-  font-size: 18px;
+  font-size: 24px;
   cursor: pointer;
+  display: flex;
 }
 
 @media (min-width: 767px) {

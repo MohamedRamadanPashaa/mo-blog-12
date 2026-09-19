@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning={true}>
         <ThemeProvider>
           <Navbar />
+
           <main className="main">
             <section className="main-section">{children}</section>
           </main>

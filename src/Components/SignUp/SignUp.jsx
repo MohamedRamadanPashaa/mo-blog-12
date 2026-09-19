@@ -7,29 +7,37 @@ import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
 
 /*
-    - Create login page with email and password
-    - Add link in the header to navigate to sign up and login pages 
-    - Add button to login or sign up using gmail
-    - style the sign up and login pages 
+  user => email + password + press login 
+  backend => check => token + email, name, _id, birthdate
 */
 
-const formValidators = {
-  name: minLength,
-  email: isEmail,
-  birthdate: isPast,
-  password: minLength,
-  passwordConfirm: theSame,
-};
+const SignUp = ({ login }) => {
+  const formValidators = {
+    name: minLength,
+    email: isEmail,
+    birthdate: isPast,
+    password: minLength,
+    passwordConfirm: theSame,
+  };
 
-const initialState = {
-  name: { value: "", isValid: false, touched: false },
-  email: { value: "", isValid: false, touched: false },
-  birthdate: { value: "", isValid: false, touched: false },
-  password: { value: "", isValid: false, touched: false },
-  passwordConfirm: { value: "", isValid: false, touched: false },
-};
+  const initialState = {
+    name: { value: "", isValid: false, touched: false },
+    email: { value: "", isValid: false, touched: false },
+    birthdate: { value: "", isValid: false, touched: false },
+    password: { value: "", isValid: false, touched: false },
+    passwordConfirm: { value: "", isValid: false, touched: false },
+  };
 
-const SignUp = () => {
+  if (login) {
+    delete formValidators["name"];
+    delete formValidators["birthdate"];
+    delete formValidators["passwordConfirm"];
+
+    delete initialState["name"];
+    delete initialState["birthdate"];
+    delete initialState["passwordConfirm"];
+  }
+
   // name email birthdate password passwordConfirm
   const { formState, handleChange, handleTouch, formIsValid } = useForm({
     initialState,
@@ -37,25 +45,28 @@ const SignUp = () => {
   });
 
   const handleSubmit = useCallback((e) => {
-    e.preventDefault();
+    e.preventDefault(); // prevent refresh
     console.log("sent");
   }, []);
 
   return (
     <form>
-      <h3>Create New Account</h3>
-      <Input
-        id="name"
-        type="text"
-        name="name"
-        label="Full Name"
-        placeholder="Write your full name"
-        errorText="Name should be at least 3 chars"
-        inputState={formState.name}
-        onChange={handleChange}
-        onBlur={handleTouch}
-        minLength={3}
-      />
+      <h3>{login ? "Log into your account" : "Create New Account"}</h3>
+
+      {!login && (
+        <Input
+          id="name"
+          type="text"
+          name="name"
+          label="Full Name"
+          placeholder="Write your full name"
+          errorText="Name should be at least 3 chars"
+          inputState={formState.name}
+          onChange={handleChange}
+          onBlur={handleTouch}
+          minLength={3}
+        />
+      )}
 
       <Input
         id="email"
@@ -69,16 +80,18 @@ const SignUp = () => {
         onBlur={handleTouch}
       />
 
-      <Input
-        id="birthdate"
-        type="date"
-        name="birthdate"
-        label="Birthdate"
-        errorText="Please provide a valid birthdate"
-        inputState={formState.birthdate}
-        onChange={handleChange}
-        onBlur={handleTouch}
-      />
+      {!login && (
+        <Input
+          id="birthdate"
+          type="date"
+          name="birthdate"
+          label="Birthdate"
+          errorText="Please provide a valid birthdate"
+          inputState={formState.birthdate}
+          onChange={handleChange}
+          onBlur={handleTouch}
+        />
+      )}
 
       <Input
         id="password"
@@ -93,20 +106,22 @@ const SignUp = () => {
         minLength={6}
       />
 
-      <Input
-        id="passwordConfirm"
-        type="password"
-        name="passwordConfirm"
-        label="Password Confirm"
-        errorText="Passwords are not the same"
-        placeholder="***********"
-        inputState={formState.passwordConfirm}
-        onChange={handleChange}
-        onBlur={handleTouch}
-      />
+      {!login && (
+        <Input
+          id="passwordConfirm"
+          type="password"
+          name="passwordConfirm"
+          label="Password Confirm"
+          errorText="Passwords are not the same"
+          placeholder="***********"
+          inputState={formState.passwordConfirm}
+          onChange={handleChange}
+          onBlur={handleTouch}
+        />
+      )}
 
       <Button disabled={!formIsValid} onClick={handleSubmit}>
-        Sign Up
+        {login ? "Login" : "Sign Up"}
       </Button>
     </form>
   );
