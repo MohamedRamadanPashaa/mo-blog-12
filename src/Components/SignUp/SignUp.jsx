@@ -1,10 +1,10 @@
 "use client";
 
 import { isEmail, isPast, minLength, theSame } from "@/helpers/validators";
-import { useCallback } from "react";
 import Input from "../UiElements/Input";
 import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
+import { loginUser } from "@/actions/users";
 
 /*
   user => email + password + press login 
@@ -44,10 +44,24 @@ const SignUp = ({ login }) => {
     formValidators,
   });
 
-  const handleSubmit = useCallback((e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // prevent refresh
     console.log("sent");
-  }, []);
+
+    if (login) {
+      try {
+        const res = loginUser({
+          email: formState.email.value,
+          password: formState.password.value,
+        });
+
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+    }
+  };
 
   return (
     <form>
@@ -120,9 +134,7 @@ const SignUp = ({ login }) => {
         />
       )}
 
-      <Button disabled={!formIsValid} onClick={handleSubmit}>
-        {login ? "Login" : "Sign Up"}
-      </Button>
+      <Button onClick={handleSubmit}>{login ? "Login" : "Sign Up"}</Button>
     </form>
   );
 };
