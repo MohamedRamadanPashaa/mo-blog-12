@@ -5,6 +5,7 @@ import Input from "../UiElements/Input";
 import Button from "../UiElements/Button";
 import useForm from "@/hooks/useForm";
 import { loginUser } from "@/actions/users";
+import { useState } from "react";
 
 /*
   user => email + password + press login 
@@ -12,6 +13,8 @@ import { loginUser } from "@/actions/users";
 */
 
 const SignUp = ({ login }) => {
+  const [error, setError] = useState("");
+
   const formValidators = {
     name: minLength,
     email: isEmail,
@@ -51,13 +54,15 @@ const SignUp = ({ login }) => {
     if (login) {
       try {
         const res = loginUser({
-          email: formState.email.value,
           password: formState.password.value,
+          email: formState.email.value,
         });
 
         console.log(res);
-      } catch (e) {
-        console.log(e);
+        // set user in global state
+      } catch (error) {
+        console.log(error.message || "Something went wrong!");
+        setError(error.message || "Something went wrong!");
       }
     } else {
     }
@@ -135,6 +140,8 @@ const SignUp = ({ login }) => {
       )}
 
       <Button onClick={handleSubmit}>{login ? "Login" : "Sign Up"}</Button>
+
+      {error && <p>{error}</p>}
     </form>
   );
 };
