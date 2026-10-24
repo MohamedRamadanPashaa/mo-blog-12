@@ -53,12 +53,12 @@ const SignUp = ({ login }) => {
 
     if (login) {
       try {
-        const res = loginUser({
+        const user = loginUser({
           password: formState.password.value,
           email: formState.email.value,
         });
 
-        console.log(res);
+        console.log(user);
         // set user in global state
       } catch (error) {
         console.log(error.message || "Something went wrong!");

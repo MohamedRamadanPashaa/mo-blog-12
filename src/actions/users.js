@@ -23,12 +23,11 @@ export const loginUser = ({ email, password }) => {
     throw new Error("No user exist with this email!");
   }
 
-  console.log(userExist);
   // check if password correct
   if (userExist.password !== password) {
     throw new Error("Password and email don't match");
   }
 
-  delete userExist.password;
+  // delete userExist.password;
   return userExist;
 };
